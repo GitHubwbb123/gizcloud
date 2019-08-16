@@ -1,15 +1,22 @@
 package com.wxb.mygiztest;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.gizwits.gizwifisdk.api.GizWifiDevice;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.wxb.mygiztest.R;
 import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.wxb.mygizlib.ui.BaseDeviceControlActivity;
@@ -18,7 +25,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 //子类
 public class DeviceControlActivity extends BaseDeviceControlActivity implements View.OnClickListener {
-
+    private  String LEDNAME="";
+    private  String LED1NAME="";
+    private  String LED2NAME="";
     private Switch mLED1;
     private Switch mLED2;
     private Switch mLED;
@@ -84,10 +93,99 @@ public class DeviceControlActivity extends BaseDeviceControlActivity implements 
                 finish();
             }
         });
+        mTopBar.addRightTextButton("编辑节点名称",com.wxb.mygizlib.R.id.text).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showReNamePointDialogClick();
+
+            }
+        });
         //判断名字改过没有，如果改过，就同步新的名字
         String tempTitle=mDevice.getAlias().isEmpty() ? mDevice.getProductName():mDevice.getAlias();
         mTopBar.setTitle(tempTitle);
         bindViews();
+        pointNameInit();
+    }
+private  void pointNameInit(){
+    SharedPreferences editor=getSharedPreferences("data",MODE_PRIVATE);
+    //节点名字获取
+    LEDNAME=editor.getString("LEDNAME","");
+    LED1NAME=editor.getString("LED1NAME","");
+    LED2NAME=editor.getString("LED2NAME","");
+    mLED.setText(LEDNAME);
+    mLED1.setText(LED1NAME);
+    mLED2.setText(LED2NAME);
+}
+
+
+    /******
+     * 弹出节点名字修改选择对话框，选择节点
+     */
+    private void showReNamePointDialogClick() {
+        //显示弹窗
+        String[] items=new String[]{mLED.getText().toString(),mLED1.getText().toString(),mLED2.getText().toString()};
+
+        new QMUIDialog.MenuDialogBuilder(this).addItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                switch (i){
+                    case 0:
+                        showReNamePointDialog(mLED);
+                        break;
+                    case 1:
+                        showReNamePointDialog(mLED1);
+                        break;
+                    case 2:
+                        showReNamePointDialog(mLED2);
+                        break;
+                }
+                dialogInterface.dismiss();
+            }
+        }).show();
+
+    }
+    //重命名节点
+    private void showReNamePointDialog(final  Switch switchId) {
+        final QMUIDialog.EditTextDialogBuilder builder=new QMUIDialog.EditTextDialogBuilder(this);
+        builder.setTitle("重命名")
+                .setInputType(InputType.TYPE_CLASS_TEXT)
+                .setPlaceholder("在此输入新名称")
+                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction("确认", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        String newName= builder.getEditText().getText().toString().trim();
+                        if(newName.isEmpty()){
+                            Toast.makeText(DeviceControlActivity.this,"输入为空",Toast.LENGTH_SHORT).show();
+
+                        }
+                        else{
+                            switchId.setText(newName);
+                            SharedPreferences.Editor editor=getSharedPreferences("data",MODE_PRIVATE).edit();
+                            switch (switchId.getId()){
+                                case R.id.LED:
+                                    editor.putString("LEDNAME",newName);
+                                    break;
+                                case R.id.LED1:
+                                    editor.putString("LED1NAME",newName);
+                                    break;
+                                case R.id.LED2:
+                                    editor.putString("LED2NAME",newName);
+                                    break;
+                            }
+                            editor.apply();
+
+                        }
+                        dialog.dismiss();
+
+                    }
+                })
+                .show();
     }
 
     @Override

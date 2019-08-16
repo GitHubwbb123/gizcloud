@@ -43,6 +43,7 @@ public class MyMainActivity extends AppCompatActivity {
     private  String PRODUCTKEY="";
     private  String PRODUCTSECRET="";
 
+
     private static final String TAG = "MainActivity";
     private ListView listView;
     private LvDeviceAdapter adapter;
@@ -77,6 +78,7 @@ public class MyMainActivity extends AppCompatActivity {
         APPSECRET=getcontent.getString("APPSECRET","");
         PRODUCTKEY=getcontent.getString("PRODUCTKEY","");
         PRODUCTSECRET=getcontent.getString("PRODUCTSECRET","");
+
     }
 
     private void initView() {
