@@ -14,7 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.wxb.mygizlib.R;
+import com.wxb.mygiztest.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -17,7 +17,6 @@ import android.widget.Toast;
 //import com.wxb.mygizlib.InfoConfig.InfoConfig;
 import com.wxb.mygizlib.Utils.SharePreUtils;
 import com.wxb.mygizlib.adapter.LvDeviceAdapter;
-import com.wxb.mygiztest.DeviceControlActivity;
 import com.wxb.mygizlib.ui.NetConfigActivity;
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.api.GizWifiSDK;
@@ -35,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class MyMainActivity extends AppCompatActivity {
+public class  MyMainActivity extends AppCompatActivity {
     String uid;
     String token;
     private  String APPID="";
@@ -293,11 +292,11 @@ public class MyMainActivity extends AppCompatActivity {
         // 设置要过滤的设备 productKey 列表。不过滤则直接传 null
         List<ConcurrentHashMap<String, String>> productInfo = new ArrayList<>();
         ConcurrentHashMap<String,String> product = new ConcurrentHashMap<>();
-       // product.put("productKey", "ea312435a255445d8ccb9932f638f402");//机智云查看
-       // product.put("productKey",InfoConfig.PRODUCTKEY);//机智云查看
+        // product.put("productKey", "ea312435a255445d8ccb9932f638f402");//机智云查看
+        // product.put("productKey",InfoConfig.PRODUCTKEY);//机智云查看
         product.put("productKey",PRODUCTKEY);//机智云查看
-       // product.put("productSecret", "d90a1304a2d4464a9b41e2916e9ad7a0");//机智云查看
-       // product.put("productSecret",InfoConfig.PRODUCTSECRET);//机智云查看
+        // product.put("productSecret", "d90a1304a2d4464a9b41e2916e9ad7a0");//机智云查看
+        // product.put("productSecret",InfoConfig.PRODUCTSECRET);//机智云查看
         product.put("productSecret",PRODUCTSECRET);//机智云查看
 
         productInfo.add(product);

@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity"
+        <activity android:name="com.wxb.mygiztest.SplashActivity"
             android:theme="@style/fullAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.wxb.mygizlib.Test"/>
+        <activity
+            android:name="com.wxb.mygiztest.MyMainActivity"
+            android:theme="@style/fullAppTheme">
+        </activity>
+
+        <activity android:name="com.wxb.mygiztest.DeviceControlActivity"
+            android:theme="@style/fullAppTheme">
+        </activity>
     </application>
 
 </manifest>

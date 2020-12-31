@@ -14,10 +14,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
-import com.wxb.mygiztest.R;
 import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.wxb.mygizlib.ui.BaseDeviceControlActivity;
 
